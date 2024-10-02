@@ -1,20 +1,26 @@
+# Secret Code Generator
+
 def encode_message(message, shift):
     """
     Encode a message by shifting each letter by the given shift number.
 
-    :param message: The message to encode
-    :param shift: The shift number
+    The parameter message: The message to be encoded. It is a string.
+    The parameter shift: The shift number to be used for encoding, like how much the string should be shifted. It is an integer.
+
     :return: The encoded message
     """
-    encoded_message = ""
-    for char in message:
-        if char.isalpha():  # Check if the character is a letter
-            ascii_offset = 65 if char.isupper() else 97  # ASCII offset for uppercase and lowercase letters
-            encoded_char = chr((ord(char) - ascii_offset + shift) % 26 + ascii_offset)
-            encoded_message += encoded_char
+    encoded_message = ""  # Initializes an empty string to store the encoded message.
+
+    for char in message:  # Iterates over each character in the input message string.
+        if char.isalpha():  # Check if the character is a letter (either uppercase or lowercase). If true, proceeds with encoding
+            ascii_offset = 65 if char.isupper() else 97
+            # Determines the ASCII offset for the current character: Uppercase letters: 65 (ASCII value of 'A') Lowercase letters: 97 (ASCII value of 'a')
+            encoded_char = chr((ord(char) - ascii_offset + shift) % 26 + ascii_offset)  # Calculates the encoded character
+            encoded_message += encoded_char  # Appends the encoded character to the encoded_message string.
         else:
-            encoded_message += char  # Leave non-letter characters unchanged
-    return encoded_message
+            encoded_message += char  # If the character is not a letter (like space or symbol), leaves it unchanged and appends it to the encoded_message string.
+
+    return encoded_message  # Returns the fully encoded message
 
 def decode_message(message, shift):
     """
@@ -24,7 +30,7 @@ def decode_message(message, shift):
     :param shift: The shift number
     :return: The decoded message
     """
-    return encode_message(message, -shift)  # Simply call encode_message with a negative shift
+    return encode_message(message, -shift)  # Simply call encode_message with a negative shift.
 
 def handle_user_input():
     """
