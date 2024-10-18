@@ -1,8 +1,12 @@
 import csv
 import datetime
+import os
 
 # Initialize expense data as a list of dictionaries
 expenses = []
+
+# Define the relative path for the CSV file
+csv_file_path = os.path.join('data', 'expenses.csv')
 
 def load_expenses(filename):
     """Load expenses from a CSV file"""
@@ -30,7 +34,7 @@ def add_expense():
         date = datetime.date.today().isoformat()
     expense = {'amount': amount, 'category': category, 'date': date}
     expenses.append(expense)
-    save_expenses('expenses.csv')
+    save_expenses(csv_file_path)
 
 def view_summary():
     """View expense summaries"""
@@ -39,7 +43,7 @@ def view_summary():
     total_spending = 0
     for expense in expenses:
         category = expense['category']
-        amount = expense['amount']
+        amount = float(expense['amount'])  # Convert amount to float for calculations
         if category not in categories:
             categories[category] = 0
         categories[category] += amount
@@ -50,7 +54,9 @@ def view_summary():
     print(f"Total overall spending: ${total_spending:.2f}")
 
 def main():
-    load_expenses('expenses.csv')
+    # Ensure the data directory exists
+    os.makedirs('data', exist_ok=True)
+    load_expenses(csv_file_path)
     while True:
         print("Menu:")
         print("  1. Add an expense")
